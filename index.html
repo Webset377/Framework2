@@ -6,11 +6,55 @@
       body {
         margin: 0;
         padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f3f3f3;
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
-        font-family: Arial, sans-serif;
+      }
+
+      .menu {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        cursor: pointer;
+        z-index: 1000;
+      }
+
+      .menu span {
+        display: block;
+        width: 30px;
+        height: 3px;
+        margin: 5px 0;
+        background-color: #333;
+        border-radius: 2px;
+      }
+
+      .settings {
+        position: absolute;
+        top: 50px;
+        left: 10px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 10px;
+        display: none;
+      }
+
+      .settings a {
+        display: block;
+        padding: 10px;
+        color: #007bff;
+        text-decoration: none;
+        border-bottom: 1px solid #eee;
+      }
+
+      .settings a:last-child {
+        border-bottom: none;
+      }
+
+      .settings a:hover {
         background-color: #f3f3f3;
       }
 
@@ -20,6 +64,8 @@
         background-color: #ffffff;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
+        max-width: 400px;
+        width: 100%;
       }
 
       .input-field {
@@ -31,6 +77,20 @@
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 16px;
+      }
+
+      .password-toggle {
+        position: relative;
+      }
+
+      .toggle-btn {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 14px;
+        color: #007bff;
       }
 
       .submit-button {
@@ -54,10 +114,27 @@
     </style>
   </head>
   <body>
+    <!-- Three-line menu -->
+    <div class="menu" onclick="toggleSettings()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Settings dropdown -->
+    <div class="settings" id="settingsMenu">
+      <a href="#">Profile</a>
+      <a href="#">Change Password</a>
+      <a href="#">Logout</a>
+    </div>
+
     <div class="form-container">
       <form id="loginForm">
         <input class="input-field" id="username" placeholder="Enter your Username" type="text" />
-        <input class="input-field" id="password" placeholder="Enter your Password" type="password" />
+        <div class="password-toggle">
+          <input class="input-field" id="password" placeholder="Enter your Password" type="password" />
+          <span class="toggle-btn" onclick="togglePassword()">Show</span>
+        </div>
         <button class="submit-button" type="submit">Login</button>
       </form>
     </div>
@@ -76,7 +153,7 @@
         storageBucket: "freefollowers-d31af.appspot.com",
         messagingSenderId: "807949104285",
         appId: "1:807949104285:web:2c0238cdc7913dad279074",
-        measurementId: "G-ME1GQ5KV8H"
+        measurementId: "G-ME1GQ5KV8H",
       };
 
       // Initialize Firebase
@@ -106,6 +183,25 @@
           alert("Please fill in both fields.");
         }
       });
+
+      // Toggle settings menu visibility
+      function toggleSettings() {
+        const menu = document.getElementById("settingsMenu");
+        menu.style.display = menu.style.display === "block" ? "none" : "block";
+      }
+
+      // Toggle password visibility
+      function togglePassword() {
+        const passwordField = document.getElementById("password");
+        const toggleBtn = passwordField.nextElementSibling;
+        if (passwordField.type === "password") {
+          passwordField.type = "text";
+          toggleBtn.textContent = "Hide";
+        } else {
+          passwordField.type = "password";
+          toggleBtn.textContent = "Show";
+        }
+      }
     </script>
   </body>
-</html>
+          </html>
