@@ -60,25 +60,6 @@
             border-radius: 10px;
             transition: width 0.5s ease-in-out;
         }
-        .share-options {
-            display: none;
-            margin-top: 10px;
-        }
-        .share-options button {
-            padding: 10px;
-            margin: 5px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            color: white;
-            font-size: 16px;
-        }
-        .whatsapp { background-color: #25D366; }
-        .facebook { background-color: #3b5998; }
-        .twitter { background-color: #1DA1F2; }
-        .telegram { background-color: #0088cc; }
-        .instagram { background-color: #E1306C; }
-        .disabled { background-color: gray !important; cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -87,15 +68,7 @@
     <p>नीचे दिए गए शेयर बटन का उपयोग करें।</p>
     
     <div class="share-container">
-        <button class="share-btn" onclick="toggleShareOptions()">⋮ शेयर</button>
-        
-        <div class="share-options">
-            <button class="whatsapp" onclick="shareOn('whatsapp')">WhatsApp</button>
-            <button class="facebook" onclick="shareOn('facebook')">Facebook</button>
-            <button class="twitter" onclick="shareOn('twitter')">Twitter</button>
-            <button class="telegram" onclick="shareOn('telegram')">Telegram</button>
-            <button class="instagram" onclick="confirmShare('instagram')">Instagram चैट</button>
-        </div>
+        <button class="share-btn" onclick="shareSystem()">⋮ शेयर</button>
 
         <div class="progress-bar">
             <div class="progress" id="progress"></div>
@@ -108,37 +81,17 @@
         let shareCount = 0;
         const shareLink = "https://example.com"; // अपना लिंक डालें
 
-        function toggleShareOptions() {
-            let options = document.querySelector(".share-options");
-            options.style.display = (options.style.display === "block") ? "none" : "block";
-        }
-
-        function shareOn(platform) {
-            let url = "";
-            switch(platform) {
-                case 'whatsapp':
-                    url = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareLink)}`;
-                    break;
-                case 'facebook':
-                    url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareLink)}`;
-                    break;
-                case 'twitter':
-                    url = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareLink)}`;
-                    break;
-                case 'telegram':
-                    url = `https://t.me/share/url?url=${encodeURIComponent(shareLink)}`;
-                    break;
-            }
-            if (url) {
-                window.open(url, "_blank");
-                setTimeout(confirmShare, 3000); // 3 सेकंड बाद कन्फर्मेशन मांगेगा
-            }
-        }
-
-        function confirmShare(platform) {
-            let confirmMsg = "Did You Sent Link!";
-            if (confirm(confirmMsg)) {
-                updateShareCount();
+        function shareSystem() {
+            if (navigator.share) {
+                navigator.share({
+                    title: "ज़रूरी लिंक",
+                    text: "इस महत्वपूर्ण लिंक को देखें:",
+                    url: shareLink
+                })
+                .then(() => updateShareCount())
+                .catch((error) => console.log("शेयरिंग विफल:", error));
+            } else {
+                alert("आपका ब्राउज़र सिस्टम शेयरिंग को सपोर्ट नहीं करता!");
             }
         }
 
@@ -156,11 +109,6 @@
             } else {
                 document.getElementById("message").innerText = 
                     "आपने 10 बार शेयर कर लिया! धन्यवाद!";
-                
-                document.querySelectorAll(".share-options button").forEach(btn => {
-                    btn.disabled = true;
-                    btn.classList.add("disabled");
-                });
             }
         }
     </script>
